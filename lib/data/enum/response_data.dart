@@ -1,0 +1,1 @@
+enum ResponseData { empty }
