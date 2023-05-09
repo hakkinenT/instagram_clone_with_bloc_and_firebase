@@ -22,7 +22,7 @@ class _FeedPageState extends State<FeedPage> {
   }
 
   getPosts() async {
-    await BlocProvider.of<PostCubit>(context).getPosts();
+    await BlocProvider.of<PostCubit>(context).postsFetched();
   }
 
   @override

@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:school_management/cubit/post_cubit.dart';
 import 'package:school_management/pages/feed/widgets/like_animation.dart';
 
+import '../../../bloc/app_bloc.dart';
 import '../../../core/constants/constants.dart';
 import '../../../data/models/post.dart';
 import '../../widgets/profile_avatar.dart';
@@ -27,6 +28,8 @@ class _PostCardState extends State<PostCard> {
 
   @override
   Widget build(BuildContext context) {
+    final user = context.select((AppBloc bloc) => bloc.state.user);
+
     return Container(
       decoration: BoxDecoration(
         //color: mobileBackgroundColor,
@@ -96,8 +99,9 @@ class _PostCardState extends State<PostCard> {
           ),
           GestureDetector(
             onDoubleTap: () {
-              //likepost
-              postCubit.likeAnimationChanged();
+              postCubit
+                ..likePost(widget.post, user.id)
+                ..likeAnimationChanged();
             },
             child: Stack(
               alignment: Alignment.center,

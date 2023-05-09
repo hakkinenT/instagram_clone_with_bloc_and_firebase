@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:school_management/cubit/post_cubit.dart';
 
 import '../../bloc/app_bloc.dart';
 import '../../core/constants/constants.dart';
@@ -20,6 +21,7 @@ class ProfilePage extends StatefulWidget {
 
 class _ProfilePageState extends State<ProfilePage> {
   late final ProfileCubit profileCubit;
+  late final PostCubit postCubit;
   late final User user;
 
   @override
@@ -27,13 +29,20 @@ class _ProfilePageState extends State<ProfilePage> {
     super.initState();
 
     profileCubit = BlocProvider.of<ProfileCubit>(context, listen: false);
+    postCubit = BlocProvider.of<PostCubit>(context, listen: false);
+
     user = BlocProvider.of<AppBloc>(context, listen: false).state.user;
 
     getUser();
+    getPosts();
   }
 
   void getUser() async {
     await profileCubit.userLoaded(user.id);
+  }
+
+  void getPosts() async {
+    await postCubit.postsFetchedByUserId(user.id);
   }
 
   @override
@@ -56,19 +65,28 @@ class _ProfilePageState extends State<ProfilePage> {
           ),
           //fim
           const SliverToBoxAdapter(child: Divider()),
-          SliverGrid.builder(
-            gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-              crossAxisCount: 3,
-              crossAxisSpacing: 5,
-              mainAxisSpacing: 1.5,
-              childAspectRatio: 1,
-            ),
-            itemCount: 10,
-            itemBuilder: (context, index) {
-              return const Image(
-                image: NetworkImage(
-                    'https://images.unsplash.com/photo-1682621421157-8e39b469a206?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxlZGl0b3JpYWwtZmVlZHwxMnx8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60'),
-                fit: BoxFit.cover,
+          BlocBuilder<PostCubit, PostState>(
+            builder: (context, state) {
+              final posts = state.posts;
+
+              return SliverGrid.builder(
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                  crossAxisSpacing: 5,
+                  mainAxisSpacing: 1.5,
+                  childAspectRatio: 1,
+                ),
+                itemCount: posts.length,
+                itemBuilder: (context, index) {
+                  if (posts[index].photoPostUrl != null) {
+                    return Image(
+                      image: NetworkImage(posts[index].photoPostUrl!),
+                      fit: BoxFit.cover,
+                    );
+                  }
+
+                  return const Text('Adicione uma foto para começar');
+                },
               );
             },
           )

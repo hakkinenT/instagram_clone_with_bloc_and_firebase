@@ -45,7 +45,7 @@ class SignUpForm extends StatelessWidget {
           Navigator.pushReplacement(
             context,
             MaterialPageRoute(
-              builder: (_) => const HomeView(),
+              builder: (_) => const HomePage(),
             ),
           );
         }

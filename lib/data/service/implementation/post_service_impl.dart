@@ -109,4 +109,28 @@ class PostServiceImpl implements PostService {
       'profileImage': data['profileImage'],
     };
   }
+
+  @override
+  Future<Response> getPostByUserId(String userId) async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> postSnap = await firestore
+          .collection(_postCollection)
+          .where('userId', isEqualTo: userId)
+          .get();
+
+      final posts = postSnap.docs
+          .map(
+            (post) => _convertToMap(
+              post.data(),
+            ),
+          )
+          .toList();
+
+      return Response(data: posts);
+    } on FirebaseException catch (e) {
+      throw DatastoreException(code: e.code);
+    } catch (_) {
+      throw const DatastoreException();
+    }
+  }
 }

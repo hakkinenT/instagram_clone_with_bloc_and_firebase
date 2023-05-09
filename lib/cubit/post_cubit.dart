@@ -18,12 +18,7 @@ class PostCubit extends Cubit<PostState> {
   final CommentRepository commentRepository;
 
   PostCubit({required this.postRepository, required this.commentRepository})
-      : posts = const [],
-        comments = const [],
-        super(const PostState());
-
-  final List<Post> posts;
-  final List<Comment> comments;
+      : super(const PostState());
 
   void commentTextChanged(String value) {
     final comment = CommentText(value);
@@ -38,17 +33,29 @@ class PostCubit extends Cubit<PostState> {
   }
 
   void postFileUploaded(Uint8List? postFile) {
-    emit(state.copyWith(postFile: postFile));
+    emit(state.copyWith(postFile: postFile, postSent: true));
   }
 
   void likeAnimationChanged() {
     emit(state.copyWith(isLikeAnimating: !state.isLikeAnimating));
   }
 
-  getPosts() async {
+  postsFetched() async {
     emit(state.copyWith(status: PostStatus.loading));
 
     final postsOrFailure = await postRepository.getAllPosts();
+
+    postsOrFailure.fold(
+      (failure) => emit(state.copyWith(
+          status: PostStatus.failure, errorMessage: failure.message)),
+      (posts) => emit(state.copyWith(posts: posts, status: PostStatus.success)),
+    );
+  }
+
+  postsFetchedByUserId(String userId) async {
+    emit(state.copyWith(status: PostStatus.loading));
+
+    final postsOrFailure = await postRepository.getPostByUserId(userId);
 
     postsOrFailure.fold(
       (failure) => emit(state.copyWith(
@@ -69,13 +76,41 @@ class PostCubit extends Cubit<PostState> {
             status: PostStatus.failure, errorMessage: failure.message),
       ),
       (success) async {
+        await postsFetched();
         emit(
           state.copyWith(
-            status: PostStatus.success,
+            postSent: false,
           ),
         );
-        await getPosts();
       },
     );
+  }
+
+  void likePost(Post post, String followId) async {
+    final likePostOrFailure = await postRepository.likePost(post, followId);
+
+    likePostOrFailure.fold(
+      (failure) => emit(
+        state.copyWith(
+            status: PostStatus.failure, errorMessage: failure.message),
+      ),
+      (success) => emit(
+        state.copyWith(status: PostStatus.success),
+      ),
+    );
+  }
+
+  resetState() {
+    Uint8List? postFile;
+    emit(state.copyWith(
+        postFile: postFile,
+        isLikeAnimating: false,
+        comments: const [],
+        posts: const [],
+        commentText: const CommentText(''),
+        postDescription: const PostDescription(''),
+        status: PostStatus.initial,
+        postSent: false,
+        errorMessage: null));
   }
 }

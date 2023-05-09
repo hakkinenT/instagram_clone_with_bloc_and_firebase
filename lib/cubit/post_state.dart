@@ -21,6 +21,7 @@ class PostState extends Equatable {
   final PostDescription postDescription;
   final PostStatus status;
   final String? errorMessage;
+  final bool postSent;
 
   const PostState(
       {this.postFile,
@@ -30,6 +31,7 @@ class PostState extends Equatable {
       this.commentText = const CommentText(''),
       this.postDescription = const PostDescription(''),
       this.status = PostStatus.initial,
+      this.postSent = false,
       this.errorMessage});
 
   PostState copyWith({
@@ -41,6 +43,7 @@ class PostState extends Equatable {
     PostDescription? postDescription,
     PostStatus? status,
     String? errorMessage,
+    bool? postSent,
   }) {
     return PostState(
       postFile: postFile ?? this.postFile,
@@ -51,6 +54,7 @@ class PostState extends Equatable {
       postDescription: postDescription ?? this.postDescription,
       status: status ?? this.status,
       errorMessage: errorMessage ?? this.errorMessage,
+      postSent: postSent ?? this.postSent,
     );
   }
 
@@ -64,5 +68,6 @@ class PostState extends Equatable {
         postDescription,
         status,
         errorMessage,
+        postSent,
       ];
 }

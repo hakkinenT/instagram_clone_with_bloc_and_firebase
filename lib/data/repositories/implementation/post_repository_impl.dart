@@ -63,4 +63,18 @@ class PostRepositoryImpl implements PostRepository {
       return Left(DatastoreFailure.fromCode(e.code));
     }
   }
+
+  @override
+  Future<Either<Failure, List<Post>>> getPostByUserId(String userId) async {
+    try {
+      final response = await service.getPostByUserId(userId);
+      List<Map<String, dynamic>> responseList = response.data;
+
+      final posts = responseList.map((post) => Post.fromJson(post)).toList();
+
+      return Right(posts);
+    } on DatastoreException catch (e) {
+      return Left(DatastoreFailure.fromCode(e.code));
+    }
+  }
 }

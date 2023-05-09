@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'bloc/app_bloc.dart';
+import 'cubit/home_cubit.dart';
 import 'cubit/post_cubit.dart';
 import 'injection_container.dart';
 import 'pages/auth_page.dart';
@@ -22,6 +23,9 @@ class AppWidget extends StatelessWidget {
         ),
         BlocProvider.value(
           value: sl<PostCubit>(),
+        ),
+        BlocProvider(
+          create: (_) => HomeCubit(),
         ),
       ],
       child: const AppView(),

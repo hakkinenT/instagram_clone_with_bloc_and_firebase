@@ -2,6 +2,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:school_management/core/utils/show_snack_bar.dart';
+import 'package:school_management/cubit/home_cubit.dart';
 
 import '../../bloc/app_bloc.dart';
 import '../../core/constants/constants.dart';
@@ -75,13 +77,13 @@ class _AddPostState extends State<AddPost> {
 
     return BlocListener<PostCubit, PostState>(
       listener: (context, state) {
-        if (state.status.isSuccess) {
-          Navigator.pop(context);
+        if (state.status.isFailure) {
+          showSnackBar(context, state.errorMessage!);
         }
       },
       child: BlocBuilder<PostCubit, PostState>(
         builder: (context, state) {
-          if (state.postFile == null) {
+          if (!state.postSent) {
             return Center(
               child: IconButton(
                 onPressed: () => _selectImage(context),
@@ -93,7 +95,7 @@ class _AddPostState extends State<AddPost> {
               appBar: AppBar(
                 title: const Text('Post to'),
                 leading: IconButton(
-                  onPressed: clearImage,
+                  onPressed: () => postCubit.resetState(),
                   icon: const Icon(Icons.arrow_back),
                 ),
                 actions: [
