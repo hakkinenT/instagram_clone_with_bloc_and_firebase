@@ -86,6 +86,19 @@ class PostCubit extends Cubit<PostState> {
     );
   }
 
+  postLikes(String postId, String userId) async {
+    final likesOrFailure = await postRepository.getPostLikes(postId);
+
+    likesOrFailure.fold(
+        (failure) => emit(
+              state.copyWith(
+                  status: PostStatus.failure, errorMessage: failure.message),
+            ),
+        (likes) => emit(state.copyWith(
+              postLiked: likes.contains(userId),
+            )));
+  }
+
   void likePost(Post post, String followId) async {
     final likePostOrFailure = await postRepository.likePost(post, followId);
 
@@ -94,9 +107,10 @@ class PostCubit extends Cubit<PostState> {
         state.copyWith(
             status: PostStatus.failure, errorMessage: failure.message),
       ),
-      (success) => emit(
-        state.copyWith(status: PostStatus.success),
-      ),
+      (success) async {
+        await postLikes(post.id, followId);
+        print(state.postLiked);
+      },
     );
   }
 

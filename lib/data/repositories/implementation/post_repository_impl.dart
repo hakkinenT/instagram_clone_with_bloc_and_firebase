@@ -77,4 +77,18 @@ class PostRepositoryImpl implements PostRepository {
       return Left(DatastoreFailure.fromCode(e.code));
     }
   }
+
+  @override
+  Future<Either<Failure, List<String>>> getPostLikes(String postId) async {
+    try {
+      final response = await service.getPostLikes(postId);
+      List<dynamic> responseList = response.data;
+
+      final likes = responseList.map((userId) => userId.toString()).toList();
+
+      return Right(likes);
+    } on DatastoreException catch (e) {
+      return Left(DatastoreFailure.fromCode(e.code));
+    }
+  }
 }

@@ -7,6 +7,7 @@ import 'package:school_management/pages/feed/widgets/like_animation.dart';
 import '../../../bloc/app_bloc.dart';
 import '../../../core/constants/constants.dart';
 import '../../../data/models/post.dart';
+import '../../../data/models/user.dart';
 import '../../widgets/profile_avatar.dart';
 
 class PostCard extends StatefulWidget {
@@ -19,6 +20,7 @@ class PostCard extends StatefulWidget {
 
 class _PostCardState extends State<PostCard> {
   late final PostCubit postCubit;
+  late final User user;
 
   @override
   void initState() {
@@ -27,9 +29,19 @@ class _PostCardState extends State<PostCard> {
   }
 
   @override
-  Widget build(BuildContext context) {
-    final user = context.select((AppBloc bloc) => bloc.state.user);
+  void didChangeDependencies() {
+    super.didChangeDependencies();
 
+    user = BlocProvider.of<AppBloc>(context).state.user;
+    getLikes();
+  }
+
+  getLikes() async {
+    await postCubit.postLikes(widget.post.id, user.id);
+  }
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
         //color: mobileBackgroundColor,
@@ -144,15 +156,25 @@ class _PostCardState extends State<PostCard> {
             padding: const EdgeInsets.symmetric(vertical: 6.0, horizontal: 14),
             child: Row(
               children: [
-                LikeAnimation(
-                  isAnimating: true, //mudar
-                  smallLike: true,
-                  onEnd: () {
-                    //likePost
+                BlocBuilder<PostCubit, PostState>(
+                  builder: (context, state) {
+                    return LikeAnimation(
+                      isAnimating: state.postLiked, //mudar
+                      smallLike: true,
+
+                      child: IconButton(
+                        icon: state.postLiked
+                            ? const Icon(
+                                Icons.favorite,
+                                color: Colors.red,
+                              )
+                            : const Icon(Icons.favorite_border),
+                        onPressed: () {
+                          postCubit.likePost(widget.post, user.id);
+                        },
+                      ),
+                    );
                   },
-                  child: const Icon(
-                    Icons.favorite,
-                  ),
                 ),
                 IconButton(
                   onPressed: () {

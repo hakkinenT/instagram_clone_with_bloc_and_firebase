@@ -32,7 +32,13 @@ class PostServiceImpl implements PostService {
   @override
   Future<Response> likePost(Post post, String followId) async {
     try {
-      if (post.likes.contains(followId)) {
+      DocumentSnapshot<Map<String, dynamic>> postDoc =
+          await firestore.collection(_postCollection).doc(post.id).get();
+
+      final data = postDoc.data()!['likes'] as List;
+      final likes = data.map((e) => e.toString()).toList();
+
+      if (likes.contains(followId)) {
         await firestore.collection(_postCollection).doc(post.id).update({
           'likes': FieldValue.arrayRemove([followId])
         });
@@ -127,6 +133,22 @@ class PostServiceImpl implements PostService {
           .toList();
 
       return Response(data: posts);
+    } on FirebaseException catch (e) {
+      throw DatastoreException(code: e.code);
+    } catch (_) {
+      throw const DatastoreException();
+    }
+  }
+
+  @override
+  Future<Response> getPostLikes(String postId) async {
+    try {
+      DocumentSnapshot<Map<String, dynamic>> postDoc =
+          await firestore.collection(_postCollection).doc(postId).get();
+
+      final likes = postDoc.data()!['likes'];
+
+      return Response(data: likes);
     } on FirebaseException catch (e) {
       throw DatastoreException(code: e.code);
     } catch (_) {
