@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:school_management/cubit/post_cubit.dart';
 
 import '../../bloc/app_bloc.dart';
 import '../../core/constants/constants.dart';
+import '../../cubit/post_cubit.dart';
 import '../../data/models/user.dart';
 import 'cubit/profile_cubit.dart';
 import 'edit_profile_page.dart';

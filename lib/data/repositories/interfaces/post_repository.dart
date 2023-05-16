@@ -1,7 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_management/core/error/failure.dart';
-import 'package:school_management/data/models/post.dart';
+
+import '../../../core/error/failure.dart';
+import '../../models/post.dart';
 
 abstract class PostRepository {
   Future<Either<Failure, Unit>> uploadPost(Post post, [Uint8List? postFile]);

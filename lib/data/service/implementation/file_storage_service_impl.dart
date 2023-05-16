@@ -2,10 +2,12 @@ import 'dart:typed_data';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
-import 'package:school_management/core/error/exceptions.dart';
-import 'package:school_management/data/service/interfaces/file_storage_service.dart';
-import 'package:school_management/data/service/response/response.dart';
+
 import 'package:uuid/uuid.dart';
+
+import '../../../core/error/exceptions.dart';
+import '../interfaces/file_storage_service.dart';
+import '../response/response.dart';
 
 class FileStorageServiceImpl implements FileStorageService {
   final FirebaseStorage storage;

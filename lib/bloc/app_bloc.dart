@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:school_management/data/models/user.dart';
-import 'package:school_management/data/repositories/interfaces/authentication_repository.dart';
+
+import '../data/models/user.dart';
+import '../data/repositories/interfaces/authentication_repository.dart';
 
 part 'app_event.dart';
 part 'app_state.dart';

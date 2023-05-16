@@ -1,19 +1,15 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
-import 'package:school_management/core/error/exceptions.dart';
-import 'package:school_management/data/enum/response_data.dart';
-import 'package:school_management/data/models/post.dart';
-import 'package:school_management/data/service/interfaces/file_storage_service.dart';
 
-import 'package:school_management/data/service/interfaces/post_service.dart';
-import 'package:school_management/data/service/response/response.dart';
+import '../../../core/error/exceptions.dart';
+import '../../enum/response_data.dart';
+import '../../models/post.dart';
+import '../interfaces/post_service.dart';
+import '../response/response.dart';
 
 class PostServiceImpl implements PostService {
   final FirebaseFirestore firestore;
-  final FileStorageService storageService;
 
-  const PostServiceImpl(
-      {required this.firestore, required this.storageService});
+  const PostServiceImpl({required this.firestore});
 
   final String _postCollection = 'posts';
 
@@ -56,9 +52,9 @@ class PostServiceImpl implements PostService {
   }
 
   @override
-  Future<Response> uploadPost(Post post, [Uint8List? postFile]) async {
+  Future<Response> uploadPost(Post post) async {
     try {
-      String photoUrl = '';
+      /*String photoUrl = '';
 
       if (postFile != null) {
         final response =
@@ -66,12 +62,9 @@ class PostServiceImpl implements PostService {
         photoUrl = response.data;
       }
 
-      Post newPost = post.copyWith(photoPostUrl: photoUrl);
+      Post newPost = post.copyWith(photoPostUrl: photoUrl);*/
 
-      firestore
-          .collection(_postCollection)
-          .doc(newPost.id)
-          .set(newPost.toJson());
+      firestore.collection(_postCollection).doc(post.id).set(post.toJson());
 
       return const Response(data: ResponseData.empty);
     } on FirebaseException catch (e) {

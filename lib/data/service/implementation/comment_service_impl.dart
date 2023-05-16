@@ -1,9 +1,10 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:school_management/core/error/exceptions.dart';
-import 'package:school_management/data/enum/response_data.dart';
-import 'package:school_management/data/models/comment.dart';
-import 'package:school_management/data/service/interfaces/comment_service.dart';
-import 'package:school_management/data/service/response/response.dart';
+
+import '../../../core/error/exceptions.dart';
+import '../../enum/response_data.dart';
+import '../../models/comment.dart';
+import '../interfaces/comment_service.dart';
+import '../response/response.dart';
 
 class CommentServiceImpl implements CommentService {
   final FirebaseFirestore firestore;

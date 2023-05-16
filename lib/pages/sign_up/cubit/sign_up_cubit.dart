@@ -1,13 +1,13 @@
 import 'package:bloc/bloc.dart';
 import 'package:dartz/dartz.dart';
 import 'package:equatable/equatable.dart';
-import 'package:school_management/data/repositories/interfaces/authentication_repository.dart';
 
 import '../../../core/error/failure.dart';
 import '../../../core/validator/form_validator.dart';
 import '../../../data/models/form/email.dart';
 import '../../../data/models/form/password.dart';
 import '../../../data/models/form/username.dart';
+import '../../../data/repositories/interfaces/authentication_repository.dart';
 
 part 'sign_up_state.dart';
 

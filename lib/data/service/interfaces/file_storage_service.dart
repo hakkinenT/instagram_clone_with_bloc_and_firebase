@@ -1,5 +1,6 @@
 import 'package:flutter/foundation.dart';
-import 'package:school_management/data/service/response/response.dart';
+
+import '../response/response.dart';
 
 abstract class FileStorageService {
   Future<Response> uploadImageToStorage(

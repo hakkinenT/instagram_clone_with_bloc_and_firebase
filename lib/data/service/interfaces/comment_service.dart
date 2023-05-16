@@ -1,5 +1,5 @@
-import 'package:school_management/data/models/comment.dart';
-import 'package:school_management/data/service/response/response.dart';
+import '../../models/comment.dart';
+import '../response/response.dart';
 
 abstract class CommentService {
   Future<Response> createComment(Comment comment);

@@ -2,9 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:school_management/data/repositories/interfaces/user_repository.dart';
-
 import '../../../data/models/user.dart';
+import '../../../data/repositories/interfaces/user_repository.dart';
 
 part 'profile_state.dart';
 
@@ -37,9 +36,9 @@ class ProfileCubit extends Cubit<ProfileState> {
         state.copyWith(
           username: user.username,
           bio: user.biography,
-          photoUrl: user.photoUrl == '' ? null : user.photoUrl,
-          following: user.following?.length,
-          followers: user.followers?.length,
+          photoUrl: user.photoUrl,
+          following: user.following.length,
+          followers: user.followers.length,
         ),
       ),
     );

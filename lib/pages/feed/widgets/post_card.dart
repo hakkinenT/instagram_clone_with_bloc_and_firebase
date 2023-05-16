@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:school_management/cubit/post_cubit.dart';
-import 'package:school_management/pages/feed/widgets/like_animation.dart';
 
 import '../../../bloc/app_bloc.dart';
 import '../../../core/constants/constants.dart';
+import '../../../cubit/post_cubit.dart';
 import '../../../data/models/post.dart';
 import '../../../data/models/user.dart';
 import '../../widgets/profile_avatar.dart';
+import 'like_animation.dart';
 
 class PostCard extends StatefulWidget {
   final Post post;

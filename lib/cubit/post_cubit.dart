@@ -2,14 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter/foundation.dart';
 
-import 'package:school_management/data/models/form/post_description.dart';
-import 'package:school_management/data/repositories/interfaces/comment_repository.dart';
-import 'package:school_management/data/repositories/interfaces/post_repository.dart';
-
 import '../data/models/comment.dart';
 import '../data/models/form/comment.dart';
+import '../data/models/form/post_description.dart';
 import '../data/models/post.dart';
 import '../data/models/user.dart';
+import '../data/repositories/interfaces/comment_repository.dart';
+import '../data/repositories/interfaces/post_repository.dart';
 
 part 'post_state.dart';
 

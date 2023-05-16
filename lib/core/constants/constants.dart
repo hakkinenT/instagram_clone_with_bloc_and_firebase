@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:school_management/pages/add_post/add_post.dart';
 
+import '../../pages/add_post/add_post.dart';
 import '../../pages/feed/feed_page.dart';
 import '../../pages/profile/profile_page.dart';
 

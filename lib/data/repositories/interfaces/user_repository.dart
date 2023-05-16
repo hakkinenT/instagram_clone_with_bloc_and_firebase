@@ -1,8 +1,8 @@
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
-import 'package:school_management/data/models/user.dart';
 
 import '../../../core/error/failure.dart';
+import '../../models/user.dart';
 
 abstract class UserRepository {
   Future<Either<Failure, Unit>> addUser(User user);

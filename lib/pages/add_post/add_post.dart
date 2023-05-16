@@ -2,11 +2,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:school_management/core/utils/show_snack_bar.dart';
 
 import '../../bloc/app_bloc.dart';
 import '../../core/constants/constants.dart';
 import '../../core/utils/pick_image.dart';
+import '../../core/utils/show_snack_bar.dart';
 import '../../cubit/post_cubit.dart';
 import '../../data/models/user.dart';
 import '../widgets/profile_avatar.dart';

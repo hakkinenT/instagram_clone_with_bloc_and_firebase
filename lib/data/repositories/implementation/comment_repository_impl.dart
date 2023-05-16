@@ -1,9 +1,10 @@
-import 'package:school_management/core/error/exceptions.dart';
-import 'package:school_management/data/models/comment.dart';
-import 'package:school_management/core/error/failure.dart';
 import 'package:dartz/dartz.dart';
-import 'package:school_management/data/repositories/interfaces/comment_repository.dart';
-import 'package:school_management/data/service/interfaces/comment_service.dart';
+
+import '../../../core/error/exceptions.dart';
+import '../../../core/error/failure.dart';
+import '../../models/comment.dart';
+import '../../service/interfaces/comment_service.dart';
+import '../interfaces/comment_repository.dart';
 
 class CommentRepositoryImpl implements CommentRepository {
   final CommentService service;

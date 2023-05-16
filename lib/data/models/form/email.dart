@@ -1,5 +1,5 @@
-import 'package:school_management/core/validator/form_input.dart';
-import 'package:school_management/core/validator/validator_mixin.dart';
+import '../../../core/validator/validator_mixin.dart';
+import '../../../core/validator/form_input.dart';
 
 class Email extends FormInput<String> with ValidatorMixin {
   const Email(super.value);

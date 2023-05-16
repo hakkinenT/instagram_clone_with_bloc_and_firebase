@@ -1,4 +1,4 @@
-import 'package:school_management/data/service/response/response.dart';
+import '../response/response.dart';
 
 abstract class AuthService {
   Response get user;

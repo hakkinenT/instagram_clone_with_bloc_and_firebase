@@ -1,10 +1,10 @@
 import 'package:go_router/go_router.dart';
-import 'package:school_management/bloc/app_bloc.dart';
-import 'package:school_management/pages/login/login_page.dart';
-import 'package:school_management/pages/sign_up/sign_up_page.dart';
 
+import '../bloc/app_bloc.dart';
 import '../injection_container.dart';
 import '../pages/home/home_page.dart';
+import '../pages/login/login_page.dart';
+import '../pages/sign_up/sign_up_page.dart';
 import 'routes_name.dart';
 
 final bloc = sl<AppBloc>();

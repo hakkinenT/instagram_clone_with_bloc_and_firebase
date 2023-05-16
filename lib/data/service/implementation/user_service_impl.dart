@@ -1,23 +1,17 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 
 import '../../../core/error/exceptions.dart';
 import '../../enum/response_data.dart';
 import '../../models/user.dart' as model;
-import '../interfaces/file_storage_service.dart';
+
 import '../interfaces/user_service.dart';
 import '../response/response.dart';
 
 class UserServiceImpl implements UserService {
   final FirebaseFirestore firestore;
-  final FileStorageService storageService;
-  final FirebaseAuth firebaseAuth;
 
   const UserServiceImpl({
     required this.firestore,
-    required this.storageService,
-    required this.firebaseAuth,
   });
 
   static const userCollection = 'users';
@@ -29,10 +23,6 @@ class UserServiceImpl implements UserService {
           .collection(userCollection)
           .doc(user.id)
           .set(user.toJson());
-
-      final currentUser = firebaseAuth.currentUser!;
-      await currentUser.updateDisplayName(user.username);
-      await currentUser.reload();
     } on FirebaseException catch (e) {
       throw DatastoreException(
         code: e.code,
@@ -61,9 +51,9 @@ class UserServiceImpl implements UserService {
   }
 
   @override
-  Future<Response> updateUser(model.User user, [Uint8List? photoFile]) async {
+  Future<Response> updateUser(model.User user) async {
     try {
-      String photoUrl = '';
+      /*String photoUrl = '';
       late model.User userUpdated;
 
       if (photoFile != null) {
@@ -74,14 +64,12 @@ class UserServiceImpl implements UserService {
         userUpdated = user.copyWith(photoUrl: photoUrl);
       } else {
         userUpdated = user;
-      }
+      }*/
 
       await firestore
           .collection(userCollection)
-          .doc(userUpdated.id)
-          .update(userUpdated.toJson());
-
-      await _updateUserAtFirebaseAuthSystem(user, photoUrl);
+          .doc(user.id)
+          .update(user.toJson());
 
       return const Response(data: ResponseData.empty);
     } on FirebaseException catch (e) {
@@ -124,15 +112,5 @@ class UserServiceImpl implements UserService {
     } catch (_) {
       throw const DatastoreException();
     }
-  }
-
-  _updateUserAtFirebaseAuthSystem(model.User user, String photoUrl) async {
-    final currentUser = firebaseAuth.currentUser!;
-
-    await currentUser.updateDisplayName(user.username);
-    await currentUser.updatePhotoURL(photoUrl);
-    await currentUser.updateEmail(user.email!);
-
-    await currentUser.reload();
   }
 }

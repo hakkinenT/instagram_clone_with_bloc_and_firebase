@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:school_management/data/models/user.dart';
+
 import 'package:uuid/uuid.dart';
 
 import 'post.dart';
+import 'user.dart';
 
 class Comment extends Equatable {
   final String id;

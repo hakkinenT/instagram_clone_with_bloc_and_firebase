@@ -6,8 +6,8 @@ class User extends Equatable {
   final String? username;
   final String? photoUrl;
   final String? biography;
-  final List? followers;
-  final List? following;
+  final List followers;
+  final List following;
 
   const User({
     required this.id,
@@ -15,8 +15,8 @@ class User extends Equatable {
     this.username,
     this.photoUrl,
     this.biography,
-    this.followers,
-    this.following,
+    this.followers = const [],
+    this.following = const [],
   });
 
   static const empty = User(id: '');
@@ -52,8 +52,8 @@ class User extends Equatable {
     String? username,
     String? photoUrl,
     String? biography,
-    List? followers,
-    List? following,
+    List<String>? followers,
+    List<String>? following,
   }) {
     return User(
       id: id ?? this.id,

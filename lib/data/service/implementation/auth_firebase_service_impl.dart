@@ -7,17 +7,14 @@ import '../../cache/cache_service.dart';
 import '../../enum/response_data.dart';
 import '../../models/user.dart';
 import '../interfaces/auth_service.dart';
-import '../interfaces/user_service.dart';
 import '../response/response.dart';
 
 class AuthServiceFirebaseImpl implements AuthService {
   final firebase_auth.FirebaseAuth firebaseAuth;
   final GoogleSignIn googleSignIn;
-  final UserService userService;
   final UserCacheService cache;
 
   const AuthServiceFirebaseImpl({
-    required this.userService,
     required this.firebaseAuth,
     required this.googleSignIn,
     required this.cache,
@@ -114,24 +111,14 @@ class AuthServiceFirebaseImpl implements AuthService {
         password: password,
       );
 
-      User user = User(
-        id: cred.user!.uid,
-        email: email,
-        username: username,
-        photoUrl: '',
-        biography: '',
-        followers: const [],
-        following: const [],
-      );
+      await firebaseAuth.currentUser!.updateDisplayName(username);
 
-      await userService.addUser(user);
+      return Response(data: cred.user!.uid);
     } on firebase_auth.FirebaseAuthException catch (e) {
       throw AuthenticationException(code: e.code);
     } catch (_) {
       throw const AuthenticationException();
     }
-
-    return const Response(data: ResponseData.empty);
   }
 }
 

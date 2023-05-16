@@ -1,6 +1,8 @@
 import 'package:equatable/equatable.dart';
-import 'package:school_management/data/models/user.dart';
+
 import 'package:uuid/uuid.dart';
+
+import 'user.dart';
 
 class Post extends Equatable {
   final String id;
