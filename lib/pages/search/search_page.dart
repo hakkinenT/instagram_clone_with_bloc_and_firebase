@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'widgets/explorer_grid_view.dart';
+import 'widgets/search_user_bar.dart';
 
 class SearchPage extends StatelessWidget {
   const SearchPage({super.key});
@@ -10,7 +11,7 @@ class SearchPage extends StatelessWidget {
     return const Scaffold(
       body: Column(
         children: [
-          SearchBar(),
+          SearchUserBar(),
           Expanded(
             child: ExplorerGridView(),
           )
