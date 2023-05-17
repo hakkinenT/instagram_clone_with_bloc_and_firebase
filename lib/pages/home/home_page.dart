@@ -43,6 +43,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BlocBuilder<HomeCubit, HomeState>(
         builder: (context, state) {
           return BottomNavigationBar(
+            backgroundColor: Colors.white,
             type: BottomNavigationBarType.fixed,
             selectedItemColor: blueColor,
             unselectedItemColor: Colors.grey,
