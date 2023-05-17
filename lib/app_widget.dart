@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:instagram_clone_2/core/config/theme/instagram_theme.dart';
 
 import 'bloc/app_bloc.dart';
 import 'cubit/home_cubit.dart';
@@ -41,9 +42,7 @@ class AppView extends StatelessWidget {
     return MaterialApp(
       title: 'Flutter Demo',
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-      ),
+      theme: InstagramTheme.light,
       home: const AuthPage(),
     );
   }
