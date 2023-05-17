@@ -53,19 +53,6 @@ class UserServiceImpl implements UserService {
   @override
   Future<Response> updateUser(model.User user) async {
     try {
-      /*String photoUrl = '';
-      late model.User userUpdated;
-
-      if (photoFile != null) {
-        final response = await storageService.uploadImageToStorage(
-            'profilePics', photoFile, false);
-        photoUrl = response.data;
-
-        userUpdated = user.copyWith(photoUrl: photoUrl);
-      } else {
-        userUpdated = user;
-      }*/
-
       await firestore
           .collection(userCollection)
           .doc(user.id)
