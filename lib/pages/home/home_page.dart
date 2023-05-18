@@ -3,16 +3,28 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../core/config/theme/colors.dart';
 import '../../core/constants/constants.dart';
-import '../../cubit/home_cubit.dart';
+import 'cubit/home_cubit.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (_) => HomeCubit(),
+      child: const HomeView(),
+    );
+  }
 }
 
-class _HomePageState extends State<HomePage> {
+class HomeView extends StatefulWidget {
+  const HomeView({super.key});
+
+  @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
   late PageController pageController;
 
   @override
